@@ -8,12 +8,12 @@ import os
 from bark import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-os.environ["SUNO_USE_SMALL_MODELS"] = "0"
-os.environ["SUNO_OFFLOAD_CPU"] = "1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# os.environ["SUNO_USE_SMALL_MODELS"] = "0"
+# os.environ["SUNO_OFFLOAD_CPU"] = "1"
 
-# download and load all models
-preload_models()
+# # download and load all models
+# preload_models()
 
 @app.post('/')
 async def main(request: Request):

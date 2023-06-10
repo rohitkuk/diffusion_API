@@ -3,6 +3,7 @@ from fastapi import Request
 from fastapi import FastAPI
 import json
 app = FastAPI()
+import numpy as np
 
 import os
 from bark import SAMPLE_RATE, generate_audio, preload_models
@@ -24,7 +25,8 @@ async def main(request: Request):
     elif content_type == 'application/json':
         try:
             JSON = await request.json()
-            return json.dumps(generate_audio(JSON['text_prompt']))
+            audio_array = generate_audio(JSON['text_prompt'])
+            return json.dumps(np.array(audio_array).tolist())
         except JSONDecodeError:
             return 'Invalid JSON data.'
     else:

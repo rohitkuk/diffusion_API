@@ -24,7 +24,7 @@ async def main(request: Request):
     elif content_type == 'application/json':
         try:
             json = await request.json()
-            return len(generate_audio(json['text_prompt']))
+            return json.dumps(generate_audio(json['text_prompt']))
         except JSONDecodeError:
             return 'Invalid JSON data.'
     else:

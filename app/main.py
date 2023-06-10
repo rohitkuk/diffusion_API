@@ -32,3 +32,17 @@ async def main(request: Request):
 
 
 
+@app.post('/test')
+async def main(request: Request):
+    content_type = request.headers.get('Content-Type')
+    
+    if content_type is None:
+        return 'No Content-Type provided.'
+    elif content_type == 'application/json':
+        try:
+            json = await request.json()
+            return len(json['text_prompt'])
+        except JSONDecodeError:
+            return 'Invalid JSON data.'
+    else:
+        return 'Content-Type not supported.'

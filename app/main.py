@@ -24,7 +24,9 @@ async def main(request: Request):
     elif content_type == 'application/json':
         try:
             json = await request.json()
-            return generate_audio(json['text_prompt'])
+            arr =  generate_audio(json['text_prompt'])
+            arr = np.array(list(arr))
+            return {"result": array.tolist()}
         except JSONDecodeError:
             return 'Invalid JSON data.'
     else:

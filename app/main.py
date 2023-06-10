@@ -1,7 +1,7 @@
 
 from fastapi import Request
 from fastapi import FastAPI
-
+import json
 app = FastAPI()
 
 import os
@@ -23,8 +23,8 @@ async def main(request: Request):
         return 'No Content-Type provided.'
     elif content_type == 'application/json':
         try:
-            json = await request.json()
-            return json.dumps(generate_audio(json['text_prompt']))
+            JSON = await request.json()
+            return json.dumps(generate_audio(JSON['text_prompt']))
         except JSONDecodeError:
             return 'Invalid JSON data.'
     else:

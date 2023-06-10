@@ -8,6 +8,8 @@ import numpy as np
 import os
 from bark import SAMPLE_RATE, generate_audio, preload_models
 from scipy.io.wavfile import write as write_wav
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # os.environ["SUNO_USE_SMALL_MODELS"] = "0"
@@ -26,7 +28,8 @@ async def main(request: Request):
         try:
             JSON = await request.json()
             audio_array = generate_audio(JSON['text_prompt'])
-            return json.dumps(np.array(audio_array).tolist())
+            json_compatible_item_data = jsonable_encoder(audio_array)
+            return JSONResponse(content=json_compatible_item_data)
         except JSONDecodeError:
             return 'Invalid JSON data.'
     else:
